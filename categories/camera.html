@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cameras - DineTech</title>
+  <link rel="website icon" href="../img/logo1.png" type="png">
+  <link rel="stylesheet" href="./category.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+  <!-- Navigation (Same as original) -->
+  <nav>
+    <div class="logo">
+      <i class="fas fa-bolt logo-icon"></i>
+      <a class="logo" style="text-decoration: none;" href="../shop/shop.html"><span>DineTech</span></a>
+    </div>
+    <div class="nav-actions">
+      <div class="favorite-icon">
+        <i class="fas fa-heart"></i>
+        <span class="favorite-count">0</span>
+      </div>
+      <div class="cart-icon">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-count">0</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header (Updated for Cameras) -->
+  <header class="page-header">
+    <h1 class="page-title">Premium Cameras</h1>
+    <p class="page-description">
+      Explore our collection of professional cameras with high-resolution sensors, 
+      advanced autofocus, and superior image quality for photographers of all levels.
+    </p>
+  </header>
+
+  <!-- Filters (Updated for Camera brands/types) -->
+  <div class="filters">
+    <div class="filter-group">
+      <span class="filter-label">Sort by:</span>
+      <select class="filter-select" id="sort-by">
+        <option value="featured">Featured</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="rating">Rating</option>
+        <option value="newest">Newest</option>
+      </select>
+    </div>
+    
+    <div class="filter-group">
+      <span class="filter-label">Brand:</span>
+      <select class="filter-select" id="brand-filter">
+        <option value="all">All Brands</option>
+        <option value="canon">Canon</option>
+        <option value="nikon">Nikon</option>
+        <option value="sony">Sony</option>
+        <option value="fujifilm">Fujifilm</option>
+        <option value="panasonic">Panasonic</option>
+      </select>
+    </div>
+    
+    <div class="filter-group">
+      <span class="filter-label">Type:</span>
+      <select class="filter-select" id="type-filter">
+        <option value="all">All Types</option>
+        <option value="dslr">DSLR</option>
+        <option value="mirrorless">Mirrorless</option>
+        <option value="compact">Compact</option>
+        <option value="action">Action</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Products Grid (Updated with Camera products) -->
+  <section class="products-section">
+    <div class="products-grid" id="products-grid">
+      <!-- Camera Product 1 -->
+      <div class="product-card" data-id="101" data-brand="sony" data-price="2499" data-rating="4.8" data-type="mirrorless">
+        <span class="product-badge">New</span>
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32" alt="Sony A7 IV">
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Sony α7 IV Mirrorless Camera</h3>
+          <div class="product-price">
+            <span class="current-price">$2,499.00</span>
+          </div>
+          <div class="product-rating">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <span class="rating-count">(892 reviews)</span>
+          </div>
+          <div class="product-actions">
+            <button class="action-btn favorite-btn">
+              <i class="far fa-heart"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="add-to-cart">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Camera Product 2 -->
+      <div class="product-card" data-id="102" data-brand="canon" data-price="1899" data-rating="4.7" data-type="dslr">
+        <span class="product-badge">Best Seller</span>
+        <div class="product-image">
+          <img src="../img/Canon EOS R6 Mark.avif" alt="Canon EOS R6">
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Canon EOS R6 Mark II</h3>
+          <div class="product-price">
+            <span class="current-price">$1,899.00</span>
+          </div>
+          <div class="product-rating">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            <span class="rating-count">(1,045 reviews)</span>
+          </div>
+          <div class="product-actions">
+            <button class="action-btn favorite-btn">
+              <i class="far fa-heart"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="add-to-cart">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Camera Product 3 -->
+      <div class="product-card" data-id="103" data-brand="fujifilm" data-price="1399" data-rating="4.6" data-type="mirrorless">
+        <span class="product-badge">Popular</span>
+        <div class="product-image">
+          <img src="../img/Fujifilm X-T5 Mirrorless.jpeg" alt="Fujifilm X-T5">
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Fujifilm X-T5 Mirrorless</h3>
+          <div class="product-price">
+            <span class="current-price">$1,399.00</span>
+          </div>
+          <div class="product-rating">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <span class="rating-count">(756 reviews)</span>
+          </div>
+          <div class="product-actions">
+            <button class="action-btn favorite-btn">
+              <i class="far fa-heart"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="add-to-cart">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Camera Product 4 -->
+      <div class="product-card" data-id="104" data-brand="nikon" data-price="1999" data-rating="4.8" data-type="mirrorless">
+        <span class="product-badge">Professional</span>
+        <div class="product-image">
+          <img src="../img/Nikon Z7 II Mirrorless.jpeg" alt="Nikon Z7 II">
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Nikon Z7 II Mirrorless</h3>
+          <div class="product-price">
+            <span class="current-price">$1,999.00</span>
+          </div>
+          <div class="product-rating">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <span class="rating-count">(689 reviews)</span>
+          </div>
+          <div class="product-actions">
+            <button class="action-btn favorite-btn">
+              <i class="far fa-heart"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="add-to-cart">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Camera Product 5 -->
+      <div class="product-card" data-id="105" data-brand="panasonic" data-price="1699" data-rating="4.5" data-type="mirrorless">
+        <span class="product-badge">4K Video</span>
+        <div class="product-image">
+          <img src="../img/Panasonic Lumix S5 II.jpeg" alt="Panasonic Lumix S5">
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Panasonic Lumix S5 II</h3>
+          <div class="product-price">
+            <span class="current-price">$1,699.00</span>
+          </div>
+          <div class="product-rating">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            <span class="rating-count">(542 reviews)</span>
+          </div>
+          <div class="product-actions">
+            <button class="action-btn favorite-btn">
+              <i class="far fa-heart"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="add-to-cart">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Camera Product 6 -->
+      <div class="product-card" data-id="106" data-brand="sony" data-price="1299" data-rating="4.7" data-type="compact">
+        <span class="product-badge">Compact</span>
+        <div class="product-image">
+          <img src="../img/Sony ZV-1 Vlogging Camera.jpeg" alt="Sony ZV-1">
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Sony ZV-1 Vlogging Camera</h3>
+          <div class="product-price">
+            <span class="current-price">$1,299.00</span>
+          </div>
+          <div class="product-rating">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <span class="rating-count">(1,187 reviews)</span>
+          </div>
+          <div class="product-actions">
+            <button class="action-btn favorite-btn">
+              <i class="far fa-heart"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="add-to-cart">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Cart (Same as original) -->
+  <div class="floating-cart">
+    <i class="fas fa-shopping-bag"></i>
+    <div>
+      <div class="cart-items">0 items</div>
+      <div class="cart-total">$0.00</div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // State Management
+      const state = {
+        cart: JSON.parse(localStorage.getItem('cart')) || [],
+        favorites: JSON.parse(localStorage.getItem('favorites')) || [],
+        products: [
+          {
+            id: 101,
+            name: "Sony α7 IV Mirrorless Camera",
+            price: 2499,
+            brand: "sony",
+            type: "mirrorless",
+            rating: 4.8,
+            reviews: 892,
+            image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
+          },
+          {
+            id: 102,
+            name: "Canon EOS R6 Mark II",
+            price: 1899,
+            brand: "canon",
+            type: "dslr",
+            rating: 4.7,
+            reviews: 1045,
+            image: "../img/Canon EOS R6 Mark.avif"
+          },
+          {
+            id: 103,
+            name: "Fujifilm X-T5 Mirrorless",
+            price: 1399,
+            brand: "fujifilm",
+            type: "mirrorless",
+            rating: 4.6,
+            reviews: 756,
+            image: "../img/Fujifilm X-T5 Mirrorless.jpeg"
+          },
+          {
+            id: 104,
+            name: "Nikon Z7 II Mirrorless",
+            price: 1999,
+            brand: "nikon",
+            type: "mirrorless",
+            rating: 4.8,
+            reviews: 689,
+            image: "../img/Nikon Z7 II Mirrorless.jpeg"
+          },
+          {
+            id: 105,
+            name: "Panasonic Lumix S5 II",
+            price: 1699,
+            brand: "panasonic",
+            type: "mirrorless",
+            rating: 4.5,
+            reviews: 542,
+            image: "../img/Panasonic Lumix S5 II.jpeg"
+          },
+          {
+            id: 106,
+            name: "Sony ZV-1 Vlogging Camera",
+            price: 1299,
+            brand: "sony",
+            type: "compact",
+            rating: 4.7,
+            reviews: 1187,
+            image: "../img/Sony ZV-1 Vlogging Camera.jpeg"
+          }
+        ]
+      };
+    
+      // DOM Elements
+      const elements = {
+        productsGrid: document.getElementById('products-grid'),
+        cartIcon: document.querySelector('.cart-icon'),
+        cartCount: document.querySelector('.cart-count'),
+        favoriteIcon: document.querySelector('.favorite-icon'),
+        favoriteCount: document.querySelector('.favorite-count'),
+        floatingCart: document.querySelector('.floating-cart'),
+        sortSelect: document.getElementById('sort-by'),
+        brandFilter: document.getElementById('brand-filter'),
+        typeFilter: document.getElementById('type-filter')
+      };
+    
+      // Initialize the app
+      function init() {
+        setupEventListeners();
+        updateCartUI();
+        updateFavoritesUI();
+        renderProducts();
+      }
+    
+      // Setup Event Listeners
+      function setupEventListeners() {
+        // Product Interactions
+        elements.productsGrid.addEventListener('click', handleProductActions);
+    
+        // Filter Changes
+        elements.sortSelect.addEventListener('change', renderProducts);
+        elements.brandFilter.addEventListener('change', renderProducts);
+        elements.typeFilter.addEventListener('change', renderProducts);
+    
+        // Floating Cart
+        elements.floatingCart.addEventListener('click', showCartModal);
+    
+        // Favorite Icon
+        elements.favoriteIcon.addEventListener('click', showFavoritesModal);
+      }
+    
+      // Handle Product Actions
+      function handleProductActions(e) {
+        const target = e.target.closest('.action-btn, .add-to-cart, .favorite-btn');
+        if (!target) return;
+    
+        const productCard = target.closest('.product-card');
+        const productId = parseInt(productCard.dataset.id);
+        const product = state.products.find(p => p.id === productId);
+    
+        if (target.classList.contains('add-to-cart')) {
+          addToCart(product);
+        } else if (target.classList.contains('favorite-btn') || target.closest('.favorite-btn')) {
+          toggleFavorite(product, target);
+        } else if (target.querySelector('.fa-eye')) {
+          showQuickView(product);
+        }
+      }
+    
+      // Toggle Favorite
+      function toggleFavorite(product, button) {
+        const index = state.favorites.findIndex(item => item.id === product.id);
+        const icon = button.querySelector('i') || button;
+        
+        if (index === -1) {
+          state.favorites.push(product);
+          if (icon) icon.classList.replace('far', 'fas');
+          showNotification(`${product.name} added to favorites`);
+        } else {
+          state.favorites.splice(index, 1);
+          if (icon) icon.classList.replace('fas', 'far');
+          showNotification(`${product.name} removed from favorites`);
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('favorites', JSON.stringify(state.favorites));
+        updateFavoritesUI();
+      }
+    
+      // Update Favorites UI
+      function updateFavoritesUI() {
+        const totalItems = state.favorites.length;
+        elements.favoriteCount.textContent = totalItems;
+        
+        // Update heart icons on product cards
+        document.querySelectorAll('.favorite-btn i').forEach(icon => {
+          const productId = parseInt(icon.closest('.product-card').dataset.id);
+          if (state.favorites.some(item => item.id === productId)) {
+            icon.classList.replace('far', 'fas');
+          } else {
+            icon.classList.replace('fas', 'far');
+          }
+        });
+      }
+    
+      // Add to Cart
+      function addToCart(product, quantity = 1) {
+        const existingItem = state.cart.find(item => item.id === product.id);
+        
+        if (existingItem) {
+          existingItem.quantity += quantity;
+        } else {
+          state.cart.push({
+            ...product,
+            quantity: quantity
+          });
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(state.cart));
+        
+        updateCartUI();
+        showNotification(`${product.name} added to cart`);
+        animateCartIcon();
+      }
+    
+      // Update Cart UI
+      function updateCartUI() {
+        const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        elements.cartCount.textContent = totalItems;
+        
+        if (elements.floatingCart) {
+          const cartItemsElement = elements.floatingCart.querySelector('.cart-items');
+          const cartTotalElement = elements.floatingCart.querySelector('.cart-total');
+          
+          if (cartItemsElement) cartItemsElement.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`;
+          if (cartTotalElement) cartTotalElement.textContent = `$${totalPrice.toFixed(2)}`;
+        }
+      }
+    
+      // Render Products with Filters
+      function renderProducts() {
+        const sortBy = elements.sortSelect.value;
+        const brandFilter = elements.brandFilter.value;
+        const typeFilter = elements.typeFilter.value;
+        
+        let filteredProducts = [...state.products];
+        
+        // Apply brand filter
+        if (brandFilter !== 'all') {
+          filteredProducts = filteredProducts.filter(product => product.brand === brandFilter);
+        }
+        
+        // Apply type filter
+        if (typeFilter !== 'all') {
+          filteredProducts = filteredProducts.filter(product => product.type === typeFilter);
+        }
+        
+        // Apply sorting
+        switch(sortBy) {
+          case 'price-low':
+            filteredProducts.sort((a, b) => a.price - b.price);
+            break;
+          case 'price-high':
+            filteredProducts.sort((a, b) => b.price - a.price);
+            break;
+          case 'rating':
+            filteredProducts.sort((a, b) => b.rating - a.rating);
+            break;
+          case 'newest':
+            // Assuming newer products have higher IDs
+            filteredProducts.sort((a, b) => b.id - a.id);
+            break;
+          default:
+            // Default sorting (featured)
+            filteredProducts.sort((a, b) => b.rating - a.rating);
+        }
+        
+        // Render the products
+        elements.productsGrid.innerHTML = filteredProducts.map(product => {
+          const isFavorite = state.favorites.some(item => item.id === product.id);
+            
+          return `
+            <div class="product-card" data-id="${product.id}" data-brand="${product.brand}" data-price="${product.price}" data-rating="${product.rating}" data-type="${product.type}">
+              <span class="product-badge">${getBadgeText(product)}</span>
+              <div class="product-image">
+                <img src="${product.image}" alt="${product.name}">
+              </div>
+              <div class="product-content">
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-price">
+                  <span class="current-price">$${product.price.toFixed(2)}</span>
+                </div>
+                <div class="product-rating">
+                  <div class="stars">
+                    ${renderStars(product.rating)}
+                  </div>
+                  <span class="rating-count">(${product.reviews} reviews)</span>
+                </div>
+                <div class="product-actions">
+                  <button class="action-btn favorite-btn">
+                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                  </button>
+                  <button class="action-btn">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="add-to-cart">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    
+      // Helper: Get appropriate badge text for camera products
+      function getBadgeText(product) {
+        if (product.brand === 'sony' && product.type === 'mirrorless') return 'New';
+        if (product.brand === 'canon') return 'Best Seller';
+        if (product.brand === 'fujifilm') return 'Popular';
+        if (product.brand === 'nikon') return 'Professional';
+        if (product.brand === 'panasonic') return '4K Video';
+        if (product.type === 'compact') return 'Compact';
+        return '';
+      }
+    
+      // Show Quick View
+      function showQuickView(product) {
+        const isFavorite = state.favorites.some(item => item.id === product.id);
+        const content = `
+          <div class="quick-view">
+            <button class="close-modal">&times;</button>
+            <div class="quick-view-image">
+              <img src="${product.image}" alt="${product.name}">
+            </div>
+            <div class="quick-view-details">
+              <h3>${product.name}</h3>
+              <div class="product-price">
+                <span class="current-price">$${product.price.toFixed(2)}</span>
+              </div>
+              <div class="product-specs">
+                <div><strong>Brand:</strong> ${product.brand.charAt(0).toUpperCase() + product.brand.slice(1)}</div>
+                <div><strong>Type:</strong> ${product.type.charAt(0).toUpperCase() + product.type.slice(1)}</div>
+              </div>
+              <div class="product-rating">
+                <div class="stars">
+                  ${renderStars(product.rating)}
+                </div>
+                <span class="rating-count">(${product.reviews} reviews)</span>
+              </div>
+              <div class="quick-view-actions">
+                <button class="btn btn-primary add-to-cart-modal" data-id="${product.id}">
+                  <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="btn btn-secondary favorite-btn-modal" data-id="${product.id}">
+                  <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i> ${isFavorite ? 'Remove Favorite' : 'Add to Favorites'}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Create modal
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.innerHTML = content;
+        document.body.appendChild(modalOverlay);
+        modalOverlay.style.display = 'flex';
+        
+        // Add event listeners
+        modalOverlay.querySelector('.close-modal').addEventListener('click', () => {
+          document.body.removeChild(modalOverlay);
+        });
+        
+        modalOverlay.querySelector('.add-to-cart-modal').addEventListener('click', function() {
+          const productId = parseInt(this.dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          addToCart(product);
+        });
+        
+        modalOverlay.querySelector('.favorite-btn-modal').addEventListener('click', function() {
+          const productId = parseInt(this.dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          toggleFavorite(product, this);
+          
+          // Update button text
+          const isNowFavorite = state.favorites.some(item => item.id === productId);
+          this.innerHTML = `<i class="${isNowFavorite ? 'fas' : 'far'} fa-heart"></i> ${isNowFavorite ? 'Remove Favorite' : 'Add to Favorites'}`;
+        });
+      }
+    
+      // Show Cart Modal
+      function showCartModal() {
+        if (state.cart.length === 0) {
+          showNotification('Your cart is empty', 'info');
+          return;
+        }
+    
+        let content = `
+          <div class="cart-modal">
+            <button class="close-modal">&times;</button>
+            <h2>Your Cart (${state.cart.reduce((sum, item) => sum + item.quantity, 0)} items)</h2>
+            <div class="cart-items-container">
+              ${state.cart.map(item => `
+                <div class="cart-item" data-id="${item.id}">
+                  <img src="${item.image}" alt="${item.name}">
+                  <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <div class="cart-item-price">$${item.price.toFixed(2)} × ${item.quantity}</div>
+                    <div class="cart-item-actions">
+                      <button class="quantity-btn minus">-</button>
+                      <span class="quantity">${item.quantity}</span>
+                      <button class="quantity-btn plus">+</button>
+                      <button class="remove-btn">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="cart-total">
+              <span>Total:</span>
+              <span>$${calculateCartTotal().toFixed(2)}</span>
+            </div>
+            <button class="btn btn-primary checkout-btn">
+              Proceed to Checkout <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        `;
+        
+        // Create modal
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.innerHTML = content;
+        document.body.appendChild(modalOverlay);
+        modalOverlay.style.display = 'flex';
+        
+        // Add event listeners
+        modalOverlay.querySelector('.close-modal').addEventListener('click', () => {
+          document.body.removeChild(modalOverlay);
+        });
+        
+        modalOverlay.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const productId = parseInt(this.closest('.cart-item').dataset.id);
+            updateCartItemQuantity(productId, -1);
+            document.body.removeChild(modalOverlay);
+            showCartModal();
+          });
+        });
+        
+        modalOverlay.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const productId = parseInt(this.closest('.cart-item').dataset.id);
+            updateCartItemQuantity(productId, 1);
+            document.body.removeChild(modalOverlay);
+            showCartModal();
+          });
+        });
+        
+        modalOverlay.querySelectorAll('.remove-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const productId = parseInt(this.closest('.cart-item').dataset.id);
+            removeFromCart(productId);
+            document.body.removeChild(modalOverlay);
+            if (state.cart.length > 0) showCartModal();
+          });
+        });
+        
+        modalOverlay.querySelector('.checkout-btn')?.addEventListener('click', () => {
+          document.body.removeChild(modalOverlay);
+          showCheckoutModal();
+        });
+      }
+    
+      // Show Favorites Modal
+      function showFavoritesModal() {
+        if (state.favorites.length === 0) {
+          showNotification('Your favorites list is empty', 'info');
+          return;
+        }
+    
+        let content = `
+          <div class="favorites-modal">
+            <button class="close-modal">&times;</button>
+            <h2>Your Favorites (${state.favorites.length} items)</h2>
+            <div class="favorites-items-container">
+              ${state.favorites.map(item => `
+                <div class="favorite-item" data-id="${item.id}">
+                  <img src="${item.image}" alt="${item.name}">
+                  <div class="favorite-item-details">
+                    <h4>${item.name}</h4>
+                    <div class="favorite-item-price">$${item.price.toFixed(2)}</div>
+                    <div class="favorite-item-specs">
+                      <span>${item.brand.charAt(0).toUpperCase() + item.brand.slice(1)}</span>
+                      <span>${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</span>
+                    </div>
+                    <div class="favorite-item-actions">
+                      <button class="action-btn add-to-cart-fav">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                      </button>
+                      <button class="action-btn remove-favorite">
+                        <i class="fas fa-trash"></i> Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        
+        // Create modal
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.innerHTML = content;
+        document.body.appendChild(modalOverlay);
+        modalOverlay.style.display = 'flex';
+        
+        // Add event listeners
+        modalOverlay.querySelector('.close-modal').addEventListener('click', () => {
+          document.body.removeChild(modalOverlay);
+        });
+        
+        modalOverlay.querySelectorAll('.add-to-cart-fav').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const productId = parseInt(this.closest('.favorite-item').dataset.id);
+            const product = state.products.find(p => p.id === productId);
+            addToCart(product);
+            showNotification(`${product.name} added to cart`);
+          });
+        });
+        
+        modalOverlay.querySelectorAll('.remove-favorite').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const productId = parseInt(this.closest('.favorite-item').dataset.id);
+            const product = state.products.find(p => p.id === productId);
+            toggleFavorite(product, this);
+            
+            // If no more favorites, close modal
+            if (state.favorites.length === 0) {
+              document.body.removeChild(modalOverlay);
+            } else {
+              document.body.removeChild(modalOverlay);
+              showFavoritesModal();
+            }
+          });
+        });
+      }
+    
+      // Show Checkout Modal
+      function showCheckoutModal() {
+        const content = `
+          <div class="checkout-modal">
+            <button class="close-modal">&times;</button>
+            <h2>Checkout</h2>
+            <div class="checkout-summary">
+              <h3>Order Summary (${state.cart.reduce((sum, item) => sum + item.quantity, 0)} items)</h3>
+              <div class="checkout-items">
+                ${state.cart.map(item => `
+                  <div class="checkout-item">
+                    <span>${item.name} × ${item.quantity}</span>
+                    <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="checkout-total">
+                <span>Total:</span>
+                <span>$${calculateCartTotal().toFixed(2)}</span>
+              </div>
+            </div>
+            <form class="checkout-form">
+              <h3>Shipping Information</h3>
+              <div class="form-group">
+                <input type="text" placeholder="Full Name" required>
+                <div class="error-message">Please enter your full name</div>
+              </div>
+              <div class="form-group">
+                <input type="email" placeholder="Email" required>
+                <div class="error-message">Please enter a valid email</div>
+              </div>
+              <div class="form-group">
+                <input type="text" placeholder="Address" required>
+                <div class="error-message">Please enter your address</div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="text" placeholder="City" required>
+                  <div class="error-message">Please enter your city</div>
+                </div>
+                <div class="form-group">
+                  <input type="text" placeholder="ZIP Code" required>
+                  <div class="error-message">Please enter your ZIP code</div>
+                </div>
+              </div>
+              <h3>Payment Method</h3>
+              <div class="payment-methods">
+                <label class="payment-method">
+                  <input type="radio" name="payment" checked>
+                  <i class="fab fa-cc-visa"></i> Credit Card
+                </label>
+                <label class="payment-method">
+                  <input type="radio" name="payment">
+                  <i class="fab fa-cc-paypal"></i> PayPal
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary place-order-btn">
+                Place Order <i class="fas fa-lock"></i>
+              </button>
+            </form>
+          </div>
+        `;
+        
+        // Create modal
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.innerHTML = content;
+        document.body.appendChild(modalOverlay);
+        modalOverlay.style.display = 'flex';
+        
+        // Add event listeners
+        modalOverlay.querySelector('.close-modal').addEventListener('click', () => {
+          document.body.removeChild(modalOverlay);
+        });
+        
+        modalOverlay.querySelector('.checkout-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          placeOrder();
+          document.body.removeChild(modalOverlay);
+        });
+      }
+    
+      // Update Cart Item Quantity
+      function updateCartItemQuantity(productId, change) {
+        const item = state.cart.find(item => item.id === productId);
+        if (!item) return;
+        
+        item.quantity += change;
+        
+        if (item.quantity <= 0) {
+          removeFromCart(productId);
+        } else {
+          // Save to localStorage
+          localStorage.setItem('cart', JSON.stringify(state.cart));
+          updateCartUI();
+        }
+      }
+    
+      // Remove from Cart
+      function removeFromCart(productId) {
+        state.cart = state.cart.filter(item => item.id !== productId);
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(state.cart));
+        updateCartUI();
+        showNotification('Item removed from cart');
+      }
+    
+      // Place Order
+      function placeOrder() {
+        // In a real app, you would process payment here
+        const orderTotal = calculateCartTotal();
+        const orderId = 'ORD-' + Math.floor(Math.random() * 1000000);
+        
+        showNotification(`Order #${orderId} placed successfully! Total: $${orderTotal.toFixed(2)}`);
+        
+        // Clear cart
+        state.cart = [];
+        localStorage.setItem('cart', JSON.stringify(state.cart));
+        updateCartUI();
+      }
+    
+      // Calculate Cart Total
+      function calculateCartTotal() {
+        return state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      }
+    
+      // Helper: Render Stars
+      function renderStars(rating) {
+        let stars = '';
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        
+        for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+        if (hasHalfStar) stars += '<i class="fas fa-star-half-alt"></i>';
+        for (let i = 0; i < 5 - fullStars - (hasHalfStar ? 1 : 0); i++) stars += '<i class="far fa-star"></i>';
+        
+        return stars;
+      }
+    
+      // Helper: Show Notification
+      function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
+      }
+    
+      // Helper: Animate Cart Icon
+      function animateCartIcon() {
+        elements.cartCount.style.transform = 'scale(1.5)';
+        setTimeout(() => {
+          elements.cartCount.style.transform = 'scale(1)';
+        }, 300);
+        
+        if (elements.floatingCart) {
+          elements.floatingCart.style.transform = 'scale(1.1)';
+          setTimeout(() => {
+            elements.floatingCart.style.transform = 'scale(1)';
+          }, 300);
+        }
+      }
+    
+      // Initialize the app
+      init();
+    });
+    </script>
+</body>
+</html>
