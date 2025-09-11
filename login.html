@@ -417,9 +417,7 @@ body {
         loginBtn.textContent = 'Sign In';
       }
     }
-  
-
-form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', (e) => {
   e.preventDefault();
   errorMessage.style.display = 'none';
   toggleLoading(true);
@@ -427,17 +425,22 @@ form.addEventListener('submit', (e) => {
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
-  // ✅ شرط على حساب محدد
+
+  // ✅ حسابات مخصصة
   if (email === "badaouiissam660@gmail.com" && password === "hifais20469") {
+    localStorage.setItem("userEmail", email);   // ← تخزين الإيميل
+    localStorage.setItem("userName", "issam");  // ← اسم مخصص
     window.location.href = "./shop/dashboard.html";
-    return; // نوقف هنا
+    return;
   }
   else if (email === "benbelgacemlylia2@gmail.com" && password === "teacher2025") {
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userName", "lylia");
     window.location.href = "./shop/dashboard.html";
-    return; // نوقف هنا
+    return;
   }
 
-  // ✅ وإلا → Firebase Auth
+  // ✅ Firebase Auth
   auth.setPersistence(firebase.auth.Auth.Persistence.NONE)
     .then(() => auth.signInWithEmailAndPassword(email, password))
     .then((userCredential) => {
@@ -449,6 +452,9 @@ form.addEventListener('submit', (e) => {
       } else {
         localStorage.setItem('userName', 'user');
       }
+
+      // ✅ حفظ الإيميل دائماً
+      localStorage.setItem("userEmail", email);
 
       // الانتقال بعد تسجيل الدخول
       window.location.href = form.getAttribute('action');
