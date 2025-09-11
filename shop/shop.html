@@ -8,462 +8,505 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="shop.css">
-  <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmepp53vg0m69pb1le4rzyi59" style="height:90px; width:90px;"></script>
+    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"/>
+    <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cmepp53vg0m69pb1le4rzyi59" style="height:90px; width:90px;"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav>
-    <div class="logo">
-      <i class="fas fa-bolt logo-icon"></i>
-      <a class="logo" style="text-decoration: none;" href="./shop.html"><span>DineTech</span></a>
-    </div>
+ <!-- Profile Sidebar -->
+ <!-- ================== PROFILE SIDEBAR ================== -->
+  <aside class="profile-sidebar collapsed" id="profile-sidebar">
     
-    <div class="nav-links">
-      <a style="cursor: pointer;" id="btn-h">Home</a>
-      <a style="cursor: pointer;" id="btn-c" >Categories</a>
-      <a style="cursor: pointer;" id="btn-d" >Deals</a>
-      <a style="cursor: pointer;" id="btn-f" >Featured</a>
+    <div class="profile-header">
+      <div class="profile-image" id="profile-image">
+        <img id="user-avatar" src="../img/defult-user.png" alt="User Avatar" />
+        <label for="upload-avatar" class="edit-icon">
+          <i class="fas fa-camera"></i>
+        </label>
+        <input type="file" id="upload-avatar" accept="image/*" hidden />
+      </div>
+      <h2 class="profile-name"></h2>
+      <p class="profile-email"></p>
     </div>
-    
-    <div class="nav-actions">
-      <div class="search-bar">
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search products...">
-      </div>
-      
-      <div class="favorite-icon">
-        <i class="fas fa-heart"></i>
-        <span class="favorite-count">0</span>
-      </div>
-      
-      <div class="cart-icon">
-        <i class="fas fa-shopping-bag"></i>
-        <span class="cart-count">0</span>
-      </div>
-      
-      <div class="hamburger">
-        <i class="fas fa-bars"></i>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <section  class="hero">
-    <img src="https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80" alt="Smartwatches" class="hero-bg">
-    
-    <div class="hero-content">
-      <span class="hero-tag">Limited Time Offer</span>
-      <h1 class="hero-title">Hello <span class="user-name">user</span>, <br>Next-Gen Tech with Advanced Innovation</h1>
-      <p class="hero-text">Experience the future of technology with our premium collection of cutting-edge devices—featuring smart connectivity, powerful performance, and intelligent features designed to elevate your everyday life.</p>
-      <div class="hero-actions">
-        <button class="btn btn-primary">
-          <i class="fas fa-shopping-cart"></i>
-          Shop Now
-        </button>
-        <button class="btn btn-secondary">
-          <i class="fas fa-play"></i>
-          Watch Demo
-        </button>
-      </div>
+      <h2 class="profile-name"></h2>
+      <p class="profile-email"></p>
     </div>
-  </section>
 
-  <!-- Categories Section -->
-  <section class="categories">
-    <div class="section-header">
-      <h2 class="section-title">Shop by Category</h2>
-      <a href="#" class="view-all">
-        View All
-        <i class="fas fa-arrow-right"></i>
-      </a>
-    </div>
-    
-    <div class="categories-grid">
-      <a style="text-decoration: none;" class="category-name" href="../categories/phones.html">
-        <div class="category-card">
-          <div class="category-icon">
-            <i class="fas fa-mobile-alt"></i>
-          </div>
-          <h3 class="category-name">Smartphones</h3>
-          <p class="category-count">125+ Products</p>
-        </div>
-      </a>
-      
-      <a style="text-decoration: none;" class="category-name" href="../categories/laptop.html">
-        <div class="category-card">
-            <div class="category-icon">
-            <i class="fas fa-laptop"></i>
-            </div>
-            <h3 class="category-name">Laptops</h3>
-            <p class="category-count">89+ Products</p>
-        </div>
-      </a>
-    
-      <a style="text-decoration: none;" class="category-name" href="../categories/tablet.html">
-        <div class="category-card">
-            <div class="category-icon">
-            <i class="fas fa-tablet-alt"></i>
-            </div>
-            <h3 class="category-name">Tablets</h3>
-            <p class="category-count">42+ Products</p>
-        </div>
-      </a>
-      
-      <a style="text-decoration: none;" class="category-name" href="../categories/watches.html">
-        <div class="category-card">
-            <div class="category-icon">
-            <i class="fas fa-clock"></i>
-            </div>
-            <h3 class="category-name">watches</h3>
-            <p class="category-count">37+ Products</p>
-        </div>
-      </a>
-      
-      <a style="text-decoration: none;" class="category-name" href="../categories/camera.html">
-        <div class="category-card">
-            <div class="category-icon">
-            <i class="fas fa-camera"></i>
-            </div>
-            <h3 class="category-name">Cameras</h3>
-            <p class="category-count">28+ Products</p>
-        </div>
-      </a>
-    </div>
-  </section>
+<ul class="profile-menu">
+  <li><a href="#" id="soon-btn"><i class="fas fa-credit-card"></i> Payment Methods</a></li>
+  <li><a href="../Settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+</ul>
 
-  <!-- Hot Deals Section -->
-  <section id="Deals" class="products">
-    <div class="section-header">
-      <h2 class="section-title">Hot Deals</h2>
-      <a href="#" class="view-all">
-        View All
-        <i class="fas fa-arrow-right"></i>
-      </a>
-    </div>
-    
-    <div class="products-container">
-      <!-- Product 1 -->
-      <div class="product-card" data-id="1">
-        <span class="product-badge">25% OFF</span>
-        <div class="product-image">
-          <img src="../img/Sony WH-1000XM4 Wireless Noise Cancelling Headphones.avif" alt="Sony Headphones">
-        </div>
-        <div class="product-content">
-          <h3 class="product-title">Sony WH-1000XM4 Wireless Noise Cancelling Headphones</h3>
-          <div class="product-price">
-            <span class="current-price">$349.99</span>
-            <span class="original-price">$399.99</span>
-          </div>
-          <div class="product-rating">
-            <div class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span class="rating-count">(1,245 reviews)</span>
-          </div>
-          <div class="product-actions">
-            <button class="action-btn favorite-btn">
-              <i class="far fa-heart"></i>
-            </button>
-            <button class="action-btn">
-              <i class="fas fa-eye"></i>
-            </button>
-            <button class="add-to-cart">
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Product 2 -->
-      <div class="product-card" data-id="2">
-        <span class="product-badge">15% OFF</span>
-        <div class="product-image">
-          <img src="../img/Apple Watch Series 8 GPS + Cellular 45mm.avif" alt="Apple Watch">
-        </div>
-        <div class="product-content">
-          <h3 class="product-title">Apple Watch Series 8 GPS + Cellular 45mm</h3>
-          <div class="product-price">
-            <span class="current-price">$429.00</span>
-            <span class="original-price">$499.00</span>
-          </div>
-          <div class="product-rating">
-            <div class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <span class="rating-count">(892 reviews)</span>
-          </div>
-          <div class="product-actions">
-            <button class="action-btn favorite-btn">
-              <i class="far fa-heart"></i>
-            </button>
-            <button class="action-btn">
-              <i class="fas fa-eye"></i>
-            </button>
-            <button class="add-to-cart">
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Product 3 -->
-      <div class="product-card" data-id="3">
-        <span class="product-badge">25% OFF</span>
-        <div class="product-image">
-          <img src="../img/OnePlus 11 5G 256GB.avif" alt="OnePlus Phone">
-        </div>
-        <div class="product-content">
-          <h3 class="product-title">OnePlus 11 5G 256GB Dual SIM</h3>
-          <div class="product-price">
-            <span class="current-price">$699.00</span>
-            <span class="original-price">$799.00</span>
-          </div>
-          <div class="product-rating">
-            <div class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <span class="rating-count">(765 reviews)</span>
-          </div>
-          <div class="product-actions">
-            <button class="action-btn favorite-btn">
-              <i class="far fa-heart"></i>
-            </button>
-            <button class="action-btn">
-              <i class="fas fa-eye"></i>
-            </button>
-            <button class="add-to-cart">
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Product 4 -->
-      <div class="product-card" data-id="4">
-        <span class="product-badge">30% OFF</span>
-        <div class="product-image">
-          <img src="../img/Canon EOS R6 Mark.avif" alt="Canon Camera">
-        </div>
-        <div class="product-content">
-          <h3 class="product-title">Canon EOS R6 Mark II Mirrorless Camera</h3>
-          <div class="product-price">
-            <span class="current-price">$2,399.00</span>
-            <span class="original-price">$2,799.00</span>
-          </div>
-          <div class="product-rating">
-            <div class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span class="rating-count">(723 reviews)</span>
-          </div>
-          <div class="product-actions">
-            <button class="action-btn favorite-btn">
-              <i class="far fa-heart"></i>
-            </button>
-            <button class="action-btn">
-              <i class="fas fa-eye"></i>
-            </button>
-            <button class="add-to-cart">
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="profile-actions">
+  <button id="logout-btn" class="logout-btn">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </button>
+</div>
 
-  <!-- Featured Product -->
-  <section id="featured" class="featured">
-    <div class="featured-content">
-      <div class="featured-image">
-        <img src="../img/s25ultra.jpeg" alt="Samsung Galaxy S25 Ultra" class="featured-img">
+  </aside>
+  <!-- المحتوى الرئيسي -->
+  <div class="main-content">
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">
+        <i class="fas fa-bolt logo-icon"></i>
+        <a class="logo" style="text-decoration: none;" href="./shop.html"><span>DineTech</span></a>
       </div>
       
-      <div class="featured-details">
-        <span class="featured-badge">Featured Product</span>
-        <h2 class="featured-title">Samsung Galaxy S25 Ultra 5G</h2>
-        <p class="featured-text">Experience the ultimate in smartphone technology with our most powerful Galaxy yet. Featuring an advanced camera system, the fastest processor, and an ultra-bright display.</p>
-        
-        <div class="featured-specs">
-          <div class="spec-item">
-            <div class="spec-icon">
-              <i class="fas fa-camera"></i>
-            </div>
-            <div>
-              <h4 class="spec-title">200MP Camera</h4>
-              <p class="spec-value">Professional-grade photography</p>
-            </div>
-          </div>
+      <div class="nav-links">
+        <a style="cursor: pointer;" id="btn-h">Home</a>
+        <a style="cursor: pointer;" id="btn-c" >Categories</a>
+        <a style="cursor: pointer;" id="btn-d" >Deals</a>
+        <a style="cursor: pointer;" id="btn-f" >Featured</a>
+      </div>
+      
+      <div class="nav-actions">
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search products...">
+        </div>
           
-          <div class="spec-item">
-            <div class="spec-icon">
-              <i class="fas fa-battery-full"></i>
-            </div>
-            <div>
-              <h4 class="spec-title">5000mAh Battery</h4>
-              <p class="spec-value">All-day power</p>
-            </div>
-          </div>
-          
-          <div class="spec-item">
-            <div class="spec-icon">
-              <i class="fas fa-memory"></i>
-            </div>
-            <div>
-              <h4 class="spec-title">12GB RAM</h4>
-              <p class="spec-value">Ultra-fast performance</p>
-            </div>
-          </div>
-          
-          <div class="spec-item">
-            <div class="spec-icon">
-              <i class="fas fa-expand"></i>
-            </div>
-            <div>
-              <h4 class="spec-title">6.8" Display</h4>
-              <p class="spec-value">Dynamic AMOLED 2X</p>
-            </div>
-          </div>
+        <!-- Sidebar Toggle Button -->
+        <div class="sidebar-toggle" id="sidebar-toggle">
+          <i class="fas fa-user"></i>
+        </div>
+
+        <div class="favorite-icon">
+          <i class="fas fa-heart"></i>
+          <span class="favorite-count">0</span>
         </div>
         
-        <div class="product-price">
-          <span class="current-price">$1,199.99</span>
-          <span class="original-price">$1,399.99</span>
+        <div class="cart-icon">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count">0</span>
         </div>
-       
-        <a href="../categories/phones.html" target="_blank">
-        <button class="btn btn-primary" style="padding: 1rem 2.5rem;">
-          <i class="fas fa-shopping-cart"></i>
-            Go to Smartphones
-        </button>
+        
+        <div class="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </nav>
+
+    <!-- باقي المحتوى الأصلي -->
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src="https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80" alt="Smartwatches" class="hero-bg">
+      
+      <div class="hero-content">
+        <span class="hero-tag">Limited Time Offer</span>
+        <h1 class="hero-title">Hello <span class="user-name">user</span>, <br>Next-Gen Tech with Advanced Innovation</h1>
+        <p class="hero-text">Experience the future of technology with our premium collection of cutting-edge devices—featuring smart connectivity, powerful performance, and intelligent features designed to elevate your everyday life.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">
+            <i class="fas fa-shopping-cart"></i>
+            Shop Now
+          </button>
+          <button class="btn btn-secondary">
+            <i class="fas fa-play"></i>
+            Watch Demo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+      <div class="section-header">
+        <h2 class="section-title">Shop by Category</h2>
+        <a href="#" class="view-all">
+          View All
+          <i class="fas fa-arrow-right"></i>
         </a>
       </div>
-    </div>
-  </section>
-
-  <!-- Newsletter -->
-  <section class="newsletter">
-    <div class="newsletter-content">
-      <h2 class="newsletter-title">Stay Updated</h2>
-      <p class="newsletter-text">Subscribe to our newsletter for exclusive deals, new product announcements, and tech insights delivered straight to your inbox.</p>
       
-      <form class="newsletter-form">
-        <input type="email" placeholder="Your email address" class="newsletter-input" required>
-        <button type="submit" class="newsletter-btn">Subscribe</button>
-      </form>
-    </div>
-  </section>
+      <div class="categories-grid">
+        <a style="text-decoration: none;" class="category-name" href="../categories/phones.html">
+          <div class="category-card">
+            <div class="category-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3 class="category-name">Smartphones</h3>
+            <p class="category-count">125+ Products</p>
+          </div>
+        </a>
+        
+        <a style="text-decoration: none;" class="category-name" href="../categories/laptop.html">
+          <div class="category-card">
+              <div class="category-icon">
+              <i class="fas fa-laptop"></i>
+              </div>
+              <h3 class="category-name">Laptops</h3>
+              <p class="category-count">89+ Products</p>
+          </div>
+        </a>
+      
+        <a style="text-decoration: none;" class="category-name" href="../categories/tablet.html">
+          <div class="category-card">
+              <div class="category-icon">
+              <i class="fas fa-tablet-alt"></i>
+              </div>
+              <h3 class="category-name">Tablets</h3>
+              <p class="category-count">42+ Products</p>
+          </div>
+        </a>
+        
+        <a style="text-decoration: none;" class="category-name" href="../categories/watches.html">
+          <div class="category-card">
+              <div class="category-icon">
+              <i class="fas fa-clock"></i>
+              </div>
+              <h3 class="category-name">watches</h3>
+              <p class="category-count">37+ Products</p>
+          </div>
+        </a>
+        
+        <a style="text-decoration: none;" class="category-name" href="../categories/camera.html">
+          <div class="category-card">
+              <div class="category-icon">
+              <i class="fas fa-camera"></i>
+              </div>
+              <h3 class="category-name">Cameras</h3>
+              <p class="category-count">28+ Products</p>
+          </div>
+        </a>
+      </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h3 class="footer-logo">
-          <i class="fas fa-bolt"></i>
-          DineTech
-        </h3>
-        <p class="footer-text">Your premier destination for cutting-edge electronics and tech gadgets. We bring the future to your doorstep.</p>
-        <div class="social-links">
-          <a href="#" class="social-link">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="social-link">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="https://www.instagram.com/dinetech_" class="social-link">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="#" class="social-link">
-            <i class="fab fa-youtube"></i>
+    <!-- Hot Deals Section -->
+    <section id="Deals" class="products">
+      <div class="section-header">
+        <h2 class="section-title">Hot Deals</h2>
+        <a href="#" class="view-all">
+          View All
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      
+      <div class="products-container">
+        <!-- Product 1 -->
+        <div class="product-card" data-id="1">
+          <span class="product-badge">25% OFF</span>
+          <div class="product-image">
+            <img src="../img/Sony WH-1000XM4 Wireless Noise Cancelling Headphones.avif" alt="Sony Headphones">
+          </div>
+          <div class="product-content">
+            <h3 class="product-title">Sony WH-1000XM4 Wireless Noise Cancelling</h3>
+            <div class="product-price">
+              <span class="current-price">$349.99</span>
+              <span class="original-price">$399.99</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="rating-count">(1,245 reviews)</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn favorite-btn">
+                <i class="far fa-heart"></i>
+              </button>
+              <button class="action-btn">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="add-to-cart">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="product-card" data-id="2">
+          <span class="product-badge">15% OFF</span>
+          <div class="product-image">
+            <img src="../img/Apple Watch Series 8 GPS + Cellular 45mm.avif" alt="Apple Watch">
+          </div>
+          <div class="product-content">
+            <h3 class="product-title">Apple Watch Series 8 GPS + Cellular 45mm</h3>
+            <div class="product-price">
+              <span class="current-price">$429.00</span>
+              <span class="original-price">$499.00</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <span class="rating-count">(892 reviews)</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn favorite-btn">
+                <i class="far fa-heart"></i>
+              </button>
+              <button class="action-btn">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="add-to-cart">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="product-card" data-id="3">
+          <span class="product-badge">25% OFF</span>
+          <div class="product-image">
+            <img src="../img/OnePlus 11 5G 256GB.avif" alt="OnePlus Phone">
+          </div>
+          <div class="product-content">
+            <h3 class="product-title">OnePlus 11 5G 256GB Dual SIM</h3>
+            <div class="product-price">
+              <span class="current-price">$699.00</span>
+              <span class="original-price">$799.00</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <span class="rating-count">(765 reviews)</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn favorite-btn">
+                <i class="far fa-heart"></i>
+              </button>
+              <button class="action-btn">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="add-to-cart">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 4 -->
+        <div class="product-card" data-id="4">
+          <span class="product-badge">30% OFF</span>
+          <div class="product-image">
+            <img src="../img/Canon EOS R6 Mark.avif" alt="Canon Camera">
+          </div>
+          <div class="product-content">
+            <h3 class="product-title">Canon EOS R6 Mark II Mirrorless Camera</h3>
+            <div class="product-price">
+              <span class="current-price">$2,399.00</span>
+              <span class="original-price">$2,799.00</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="rating-count">(723 reviews)</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn favorite-btn">
+                <i class="far fa-heart"></i>
+              </button>
+              <button class="action-btn">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="add-to-cart">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Product -->
+    <section id="featured" class="featured">
+      <div class="featured-content">
+        <div class="featured-image">
+          <img src="../img/s25ultra.jpeg" alt="Samsung Galaxy S25 Ultra" class="featured-img">
+        </div>
+        
+        <div class="featured-details">
+          <span class="featured-badge">Featured Product</span>
+          <h2 class="featured-title">Samsung Galaxy S25 Ultra 5G</h2>
+          <p class="featured-text">Experience the ultimate in smartphone technology with our most powerful Galaxy yet. Featuring an advanced camera system, the fastest processor, and an ultra-bright display.</p>
+          
+          <div class="featured-specs">
+            <div class="spec-item">
+              <div class="spec-icon">
+                <i class="fas fa-camera"></i>
+              </div>
+              <div>
+                <h4 class="spec-title">200MP Camera</h4>
+                <p class="spec-value">Professional-grade photography</p>
+              </div>
+            </div>
+            
+            <div class="spec-item">
+              <div class="spec-icon">
+                <i class="fas fa-battery-full"></i>
+              </div>
+              <div>
+                <h4 class="spec-title">5000mAh Battery</h4>
+                <p class="spec-value">All-day power</p>
+              </div>
+            </div>
+            
+            <div class="spec-item">
+              <div class="spec-icon">
+                <i class="fas fa-memory"></i>
+              </div>
+              <div>
+                <h4 class="spec-title">12GB RAM</h4>
+                <p class="spec-value">Ultra-fast performance</p>
+              </div>
+            </div>
+            
+            <div class="spec-item">
+              <div class="spec-icon">
+                <i class="fas fa-expand"></i>
+              </div>
+              <div>
+                <h4 class="spec-title">6.8" Display</h4>
+                <p class="spec-value">Dynamic AMOLED 2X</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="product-price">
+            <span class="current-price">$1,199.99</span>
+            <span class="original-price">$1,399.99</span>
+          </div>
+         
+          <a href="../categories/phones.html" target="_blank">
+          <button class="btn btn-primary" style="padding: 1rem 2.5rem;">
+            <i class="fas fa-shopping-cart"></i>
+              Go to Smartphones
+          </button>
           </a>
         </div>
       </div>
-      
-      <div class="footer-col">
-        <h3 class="footer-title">Shop</h3>
-        <ul class="footer-links">
-          <li><a href="../categories/phones.html">Smartphones</a></li>
-          <li><a href="../categories/laptop.html">Laptops</a></li>
-          <li><a href="../categories/watches.html">Watches</a></li>
-          <li><a href="../categories/tablet.html">Tablets</a></li>
-          <li><a href="../categories/camera.html">Cameras</a></li>
-        </ul>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+      <div class="newsletter-content">
+        <h2 class="newsletter-title">Stay Updated</h2>
+        <p class="newsletter-text">Subscribe to our newsletter for exclusive deals, new product announcements, and tech insights delivered straight to your inbox.</p>
+        
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email address" class="newsletter-input" required>
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
       </div>
-   
-      <div class="footer-col">
-        <h3 class="footer-title">Support</h3>
-        <ul class="footer-links">
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">FAQs</a></li>
-          <li><a href="#">Shipping</a></li>
-          <li><a href="#">Returns</a></li>
-          <li><a href="#">Warranty</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-col">
-        <h3 class="footer-title">Company</h3>
-        <ul class="footer-links">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="footer-bottom">
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3 class="footer-logo">
+            <i class="fas fa-bolt"></i>
+            DineTech
+          </h3>
+          <p class="footer-text">Your premier destination for cutting-edge electronics and tech gadgets. We bring the future to your doorstep.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/dinetech_" class="social-link">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3 class="footer-title">Shop</h3>
+          <ul class="footer-links">
+            <li><a href="../categories/phones.html">Smartphones</a></li>
+            <li><a href="../categories/laptop.html">Laptops</a></li>
+            <li><a href="../categories/watches.html">Watches</a></li>
+            <li><a href="../categories/tablet.html">Tablets</a></li>
+            <li><a href="../categories/camera.html">Cameras</a></li>
+          </ul>
+        </div>
      
-      <p>© 2025 DineTech Electronics. All rights reserved. <br> created by <a href="https://issam-portfolio-2025.web.app" class="portfolio">Badaoui Issameddine</a></p>
-      <div class="payment-methods">
-        <div class="payment-method">
-          <i class="fab fa-cc-visa"></i>
+        <div class="footer-col">
+          <h3 class="footer-title">Support</h3>
+          <ul class="footer-links">
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Warranty</a></li>
+          </ul>
         </div>
-        <div class="payment-method">
-          <i class="fab fa-cc-mastercard"></i>
-        </div>
-        <div class="payment-method">
-          <i class="fab fa-cc-paypal"></i>
-        </div>
-        <div class="payment-method">
-          <i class="fab fa-cc-apple-pay"></i>
+        
+        <div class="footer-col">
+          <h3 class="footer-title">Company</h3>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
         </div>
       </div>
-    </div>
-  </footer>
+      
+      <div class="footer-bottom">
+        <p>© 2025 DineTech Electronics. All rights reserved. <br> created by <a href="https://issam-portfolio-2025.web.app" class="portfolio">Badaoui Issameddine</a></p>
+        <div class="payment-methods">
+          <div class="payment-method">
+            <i class="fab fa-cc-visa"></i>
+          </div>
+          <div class="payment-method">
+            <i class="fab fa-cc-mastercard"></i>
+          </div>
+          <div class="payment-method">
+            <i class="fab fa-cc-paypal"></i>
+          </div>
+          <div class="payment-method">
+            <i class="fab fa-cc-apple-pay"></i>
+          </div>
+        </div>
+      </div>
+    </footer>
 
-  <!-- Floating Elements -->
-  <div style="display: none;" class="floating-cart">
-    <i class="fas fa-shopping-bag"></i>
-    <div>
-      <div class="cart-items">0 items</div>
-      <div class="cart-total">$0.00</div>
+    <!-- Floating Elements -->
+    <div style="display: none;" class="floating-cart">
+      <i class="fas fa-shopping-bag"></i>
+      <div>
+        <div class="cart-items">0 items</div>
+        <div class="cart-total">$0.00</div>
+      </div>
+    </div>
+
+    <div style="display: none;" class="floating-favorites">
+      <i class="fas fa-heart"></i>
+      <div>
+        <div class="favorites-count">0 items</div>
+      </div>
     </div>
   </div>
 
-  <div style="display: none;" class="floating-favorites">
-    <i class="fas fa-heart"></i>
-    <div>
-      <div class="favorites-count">0 items</div>
-    </div>
-  </div>
-<script src="./shop.js"></script>
+  <script src="./shop.js" ></script>
 </body>
 </html>
