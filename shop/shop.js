@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput: document.querySelector('.search-bar input'),
     searchIcon: document.querySelector('.search-bar i'),
     newsletterForm: document.querySelector('.newsletter-form'),
-    heroShopBtn: document.querySelector('.hero-actions .btn-primary '),
+    heroShopBtn: document.querySelector('.hero-actions .btn-primary'),
     modalOverlay: document.createElement('div'),
     modalContent: document.createElement('div'),
     linkHome: document.querySelector("#btn-h"),
@@ -79,6 +79,17 @@ document.addEventListener('DOMContentLoaded', function() {
     linkdeals: document.querySelector("#btn-d"),
     linkfeatred: document.querySelector("#btn-f")
   };
+
+  // Check if elements exist before using them
+  const savedEmail = localStorage.getItem("userEmail");
+  if (document.getElementsByClassName("profile-email").length > 0) {
+    const PlaceEmail = document.getElementsByClassName("profile-email")[0];
+    if (savedEmail) {
+      PlaceEmail.textContent = savedEmail;
+    } else {
+      PlaceEmail.textContent = "exemple@gmail.com";
+    }
+  }
 
   // Create Modal
   function createModal() {
@@ -122,60 +133,121 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Setup Event Listeners
   function setupEventListeners() {
-    // Mobile Menu Toggle
-    elements.hamburger.addEventListener('click', toggleMobileMenu);
+    // Mobile Menu Toggle - check if element exists
+    if (elements.hamburger) {
+      elements.hamburger.addEventListener('click', toggleMobileMenu);
+    }
 
-    // Product Interactions
-    elements.productsContainer.addEventListener('click', handleProductActions);
+    // Product Interactions - check if element exists
+    if (elements.productsContainer) {
+      elements.productsContainer.addEventListener('click', handleProductActions);
+    }
 
-    // Search Functionality
-    elements.searchInput.addEventListener('input', searchProducts);
-    elements.searchIcon.addEventListener('click', showSearchModal);
+    // Search Functionality - check if elements exist
+    if (elements.searchInput) {
+      elements.searchInput.addEventListener('input', searchProducts);
+      elements.searchInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          searchProducts();
+        }
+      });
+    }
+    
+    if (elements.searchIcon) {
+      elements.searchIcon.addEventListener('click', showSearchModal);
+    }
 
-    // Newsletter Form
-    elements.newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+    // Newsletter Form - check if element exists
+    if (elements.newsletterForm) {
+      elements.newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+    }
 
-    // Hero Shop Button
-    elements.heroShopBtn.addEventListener('click', function() {
-      scrollToSection('.products');
-    });
-    //===================
-    elements.linkHome.addEventListener('click', function() {
-      scrollToSection('.hero');
-    });
-    //==============================
-    elements.linkcatego.addEventListener('click', function() {
-      scrollToSection('.categories');
-    });
-    //=========================
-    elements.linkdeals.addEventListener('click', function() {
-      scrollToSection('.products');
-    });
-    //========================
-    elements.linkfeatred.addEventListener('click', function() {
-      scrollToSection('.featured');
-    });
+    // Hero Shop Button - check if element exists
+    if (elements.heroShopBtn) {
+      elements.heroShopBtn.addEventListener('click', function() {
+        scrollToSection('.products');
+      });
+    }
+    
+    // Navigation links - check if elements exist
+    if (elements.linkHome) {
+      elements.linkHome.addEventListener('click', function() {
+        scrollToSection('.hero');
+      });
+    }
+    
+    if (elements.linkcatego) {
+      elements.linkcatego.addEventListener('click', function() {
+        scrollToSection('.categories');
+      });
+    }
+    
+    if (elements.linkdeals) {
+      elements.linkdeals.addEventListener('click', function() {
+        scrollToSection('.products');
+      });
+    }
+    
+    if (elements.linkfeatred) {
+      elements.linkfeatred.addEventListener('click', function() {
+        scrollToSection('.featured');
+      });
+    }
 
+    // Floating Cart - check if element exists
+    if (elements.floatingCart) {
+      elements.floatingCart.addEventListener('click', showCartModal);
+    }
 
-    // Floating Cart
-    elements.floatingCart.addEventListener('click', showCartModal);
+    // Floating Favorites - check if element exists
+    if (elements.floatingFavorites) {
+      elements.floatingFavorites.addEventListener('click', showFavoritesModal);
+    }
 
-    // Floating Favorites
-    elements.floatingFavorites.addEventListener('click', showFavoritesModal);
+    // Cart Icon - check if element exists
+    if (elements.cartIcon) {
+      elements.cartIcon.addEventListener('click', showCartModal);
+    }
 
-    // Cart Icon
-    elements.cartIcon.addEventListener('click', showCartModal);
+    // Favorite Icon - check if element exists
+    if (elements.favoriteIcon) {
+      elements.favoriteIcon.addEventListener('click', showFavoritesModal);
+    }
+    
+    // Cart and favorites list items
+    const cartLi = document.querySelector('.open-cart');
+    const favLi = document.querySelector('.open-favorites');
 
-    // Favorite Icon
-    elements.favoriteIcon.addEventListener('click', showFavoritesModal);
+    if (cartLi) cartLi.addEventListener('click', showCartModal);
+    if (favLi) favLi.addEventListener('click', showFavoritesModal);
+    
+    // Logout button
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("user-avatar");
+        window.location.href = "../login.html";
+      });
+    }
+    
+    // Coming soon button
+    const soonBtn = document.getElementById("soon-btn");
+    if (soonBtn) {
+      soonBtn.addEventListener("click", showComingSoon);
+    }
   }
 
   // Toggle Mobile Menu
   function toggleMobileMenu() {
-    elements.navLinks.classList.toggle('show');
-    elements.hamburger.innerHTML = elements.navLinks.classList.contains('show') 
-      ? '<i class="fas fa-times"></i>' 
-      : '<i class="fas fa-bars"></i>';
+    if (elements.navLinks) {
+      elements.navLinks.classList.toggle('show');
+      if (elements.hamburger) {
+        elements.hamburger.innerHTML = elements.navLinks.classList.contains('show') 
+          ? '<i class="fas fa-times"></i>' 
+          : '<i class="fas fa-bars"></i>';
+      }
+    }
   }
 
   // Handle Product Actions
@@ -184,8 +256,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!target) return;
 
     const productCard = target.closest('.product-card');
+    if (!productCard) return;
+    
     const productId = parseInt(productCard.dataset.id);
     const product = state.products.find(p => p.id === productId);
+    if (!product) return;
 
     if (target.classList.contains('add-to-cart')) {
       addToCart(product);
@@ -219,32 +294,44 @@ document.addEventListener('DOMContentLoaded', function() {
   // Update Favorites UI
   function updateFavoritesUI() {
     const totalItems = state.favorites.length;
-    elements.favoriteCount.textContent = totalItems;
+    if (elements.favoriteCount) {
+      elements.favoriteCount.textContent = totalItems;
+    }
     
     if (elements.floatingFavorites) {
       const favoritesCountElement = elements.floatingFavorites.querySelector('.favorites-count');
-      if (favoritesCountElement) favoritesCountElement.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`;
+      if (favoritesCountElement) {
+        favoritesCountElement.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`;
+      }
     }
     
     // Update heart icons on product cards
     document.querySelectorAll('.favorite-btn i').forEach(icon => {
-      const productId = parseInt(icon.closest('.product-card').dataset.id);
-      if (state.favorites.some(item => item.id === productId)) {
-        icon.classList.replace('far', 'fas');
-      } else {
-        icon.classList.replace('fas', 'far');
+      const productCard = icon.closest('.product-card');
+      if (productCard) {
+        const productId = parseInt(productCard.dataset.id);
+        if (state.favorites.some(item => item.id === productId)) {
+          icon.classList.replace('far', 'fas');
+        } else {
+          icon.classList.replace('fas', 'far');
+        }
       }
     });
   }
 
+  // User name display
   const userName = localStorage.getItem('userName') || 'guest';
   const userElement = document.querySelector('.user-name');
+  const userProfile = document.querySelector('.profile-name');
 
   if (userElement) {
     userElement.textContent = userName;
   }
 
-  console.error(userName +" Your attempt to hack us makes you an enemy of our security systems.");
+  if (userProfile) {
+    userProfile.textContent = userName;
+  }
+
   // Show Favorites Modal
   function showFavoritesModal() {
     if (state.favorites.length === 0) {
@@ -281,31 +368,40 @@ document.addEventListener('DOMContentLoaded', function() {
     openModal(content);
     
     // Add event listeners to favorites modal buttons
-    document.querySelectorAll('.add-to-cart-fav').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const productId = parseInt(this.closest('.favorite-item').dataset.id);
-        const product = state.products.find(p => p.id === productId);
-        addToCart(product);
-        showNotification(`${product.name} added to cart`);
+    setTimeout(() => {
+      document.querySelectorAll('.add-to-cart-fav').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productId = parseInt(this.closest('.favorite-item').dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          if (product) {
+            addToCart(product);
+            showNotification(`${product.name} added to cart`);
+          }
+        });
       });
-    });
-    
-    document.querySelectorAll('.remove-favorite').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const productId = parseInt(this.closest('.favorite-item').dataset.id);
-        const product = state.products.find(p => p.id === productId);
-        toggleFavorite(product, this);
-        
-        // If no more favorites, close modal
-        if (state.favorites.length === 0) {
-          closeModal();
-        } else {
-          showFavoritesModal(); // Refresh modal
-        }
+      
+      document.querySelectorAll('.remove-favorite').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productId = parseInt(this.closest('.favorite-item').dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          if (product) {
+            toggleFavorite(product, this);
+            
+            // If no more favorites, close modal
+            if (state.favorites.length === 0) {
+              closeModal();
+            } else {
+              showFavoritesModal(); // Refresh modal
+            }
+          }
+        });
       });
-    });
-    
-    document.querySelector('.close-modal')?.addEventListener('click', closeModal);
+      
+      const closeBtn = document.querySelector('.close-modal');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+    }, 10);
   }
 
   // Show Quick View
@@ -345,25 +441,40 @@ document.addEventListener('DOMContentLoaded', function() {
     openModal(content);
     
     // Add event listener to modal's add to cart button
-    document.querySelector('.add-to-cart-modal')?.addEventListener('click', function() {
-      const productId = parseInt(this.dataset.id);
-      const product = state.products.find(p => p.id === productId);
-      addToCart(product);
-      showNotification(`${product.name} added to cart`);
-    });
-    
-    // Add event listener to modal's favorite button
-    document.querySelector('.favorite-btn-modal')?.addEventListener('click', function() {
-      const productId = parseInt(this.dataset.id);
-      const product = state.products.find(p => p.id === productId);
-      toggleFavorite(product, this);
+    setTimeout(() => {
+      const addToCartBtn = document.querySelector('.add-to-cart-modal');
+      if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function() {
+          const productId = parseInt(this.dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          if (product) {
+            addToCart(product);
+            showNotification(`${product.name} added to cart`);
+          }
+        });
+      }
       
-      // Update button text
-      const isNowFavorite = state.favorites.some(item => item.id === productId);
-      this.innerHTML = `<i class="${isNowFavorite ? 'fas' : 'far'} fa-heart"></i> ${isNowFavorite ? 'Remove Favorite' : 'Add to Favorites'}`;
-    });
-    
-    document.querySelector('.close-modal')?.addEventListener('click', closeModal);
+      // Add event listener to modal's favorite button
+      const favoriteBtn = document.querySelector('.favorite-btn-modal');
+      if (favoriteBtn) {
+        favoriteBtn.addEventListener('click', function() {
+          const productId = parseInt(this.dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          if (product) {
+            toggleFavorite(product, this);
+            
+            // Update button text
+            const isNowFavorite = state.favorites.some(item => item.id === productId);
+            this.innerHTML = `<i class="${isNowFavorite ? 'fas' : 'far'} fa-heart"></i> ${isNowFavorite ? 'Remove Favorite' : 'Add to Favorites'}`;
+          }
+        });
+      }
+      
+      const closeBtn = document.querySelector('.close-modal');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+    }, 10);
   }
 
   // Add to Cart
@@ -392,7 +503,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
     const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
-    elements.cartCount.textContent = totalItems;
+    if (elements.cartCount) {
+      elements.cartCount.textContent = totalItems;
+    }
     
     if (elements.floatingCart) {
       const cartItemsElement = elements.floatingCart.querySelector('.cart-items');
@@ -446,29 +559,38 @@ document.addEventListener('DOMContentLoaded', function() {
     openModal(content);
     
     // Add event listeners to cart modal buttons
-    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const productId = parseInt(this.closest('.cart-item').dataset.id);
-        updateCartItemQuantity(productId, -1);
+    setTimeout(() => {
+      document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productId = parseInt(this.closest('.cart-item').dataset.id);
+          updateCartItemQuantity(productId, -1);
+        });
       });
-    });
-    
-    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const productId = parseInt(this.closest('.cart-item').dataset.id);
-        updateCartItemQuantity(productId, 1);
+      
+      document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productId = parseInt(this.closest('.cart-item').dataset.id);
+          updateCartItemQuantity(productId, 1);
+        });
       });
-    });
-    
-    document.querySelectorAll('.remove-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const productId = parseInt(this.closest('.cart-item').dataset.id);
-        removeFromCart(productId);
+      
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productId = parseInt(this.closest('.cart-item').dataset.id);
+          removeFromCart(productId);
+        });
       });
-    });
-    
-    document.querySelector('.checkout-btn')?.addEventListener('click', proceedToCheckout);
-    document.querySelector('.close-modal')?.addEventListener('click', closeModal);
+      
+      const checkoutBtn = document.querySelector('.checkout-btn');
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', proceedToCheckout);
+      }
+      
+      const closeBtn = document.querySelector('.close-modal');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+    }, 10);
   }
 
   // Update Cart Item Quantity
@@ -563,12 +685,20 @@ document.addEventListener('DOMContentLoaded', function() {
     
     openModal(content);
     
-    document.querySelector('.checkout-form')?.addEventListener('submit', function(e) {
-      e.preventDefault();
-      placeOrder();
-    });
-    
-    document.querySelector('.close-modal')?.addEventListener('click', closeModal);
+    setTimeout(() => {
+      const checkoutForm = document.querySelector('.checkout-form');
+      if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          placeOrder();
+        });
+      }
+      
+      const closeBtn = document.querySelector('.close-modal');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+    }, 10);
   }
 
   // Place Order
@@ -591,128 +721,137 @@ document.addEventListener('DOMContentLoaded', function() {
     return state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   }
 
-// Search Products
-function searchProducts() {
-  const searchTerm = elements.searchInput.value.toLowerCase().trim();
-  
-  if (searchTerm.length > 0) {
-    // Filter products based on search term
-    state.searchResults = state.products.filter(product => 
-      product.name.toLowerCase().includes(searchTerm) ||
-      product.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
-      product.category.toLowerCase().includes(searchTerm)
-    );
+  // Search Products
+  function searchProducts() {
+    if (!elements.searchInput) return;
     
-    // Show search results in modal
-    showSearchModal();
-  }
-}
-
-// Add Enter key functionality
-if (elements.searchInput) {
-  elements.searchInput.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      searchProducts();
+    const searchTerm = elements.searchInput.value.toLowerCase().trim();
+    
+    if (searchTerm.length > 0) {
+      // Filter products based on search term
+      state.searchResults = state.products.filter(product => 
+        product.name.toLowerCase().includes(searchTerm) ||
+        product.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+        product.category.toLowerCase().includes(searchTerm)
+      );
+      
+      // Show search results in modal
+      showSearchModal();
     }
-  });
-}
+  }
 
-// Show Search Modal
-function showSearchModal() {
-  const searchTerm = elements.searchInput.value.toLowerCase().trim();
-  
-  if (searchTerm.length === 0) {
-    showNotification('Please enter a search term', 'info');
-    return;
-  }
-  
-  if (state.searchResults.length === 0) {
-    showNotification('No products found for your search', 'info');
-    return;
-  }
-  
-  let content = `
-    <div class="search-modal">
-      <button class="close-modal">&times;</button>
-      <h2>Search Results for "${searchTerm}"</h2>
-      <p class="search-results-count">Found ${state.searchResults.length} products</p>
-      <div class="search-results-container">
-        ${state.searchResults.map(product => {
-          const isFavorite = state.favorites.some(item => item.id === product.id);
-          return `
-            <div class="search-result-item" data-id="${product.id}">
-              <img src="${product.image}" alt="${product.name}">
-              <div class="search-result-details">
-                <h4>${product.name}</h4>
-                <div class="product-price">
-                  <span class="current-price">$${product.price.toFixed(2)}</span>
-                  ${product.originalPrice ? `<span class="original-price">$${product.originalPrice.toFixed(2)}</span>` : ''}
-                </div>
-                <div class="product-rating">
-                  <div class="stars">
-                    ${renderStars(product.rating)}
+  // Show Search Modal
+  function showSearchModal() {
+    if (!elements.searchInput) return;
+    
+    const searchTerm = elements.searchInput.value.toLowerCase().trim();
+    
+    if (searchTerm.length === 0) {
+      showNotification('Please enter a search term', 'info');
+      return;
+    }
+    
+    if (state.searchResults.length === 0) {
+      showNotification('No products found for your search', 'info');
+      return;
+    }
+    
+    let content = `
+      <div class="search-modal">
+        <button class="close-modal">&times;</button>
+        <h2>Search Results for "${searchTerm}"</h2>
+        <p class="search-results-count">Found ${state.searchResults.length} products</p>
+        <div class="search-results-container">
+          ${state.searchResults.map(product => {
+            const isFavorite = state.favorites.some(item => item.id === product.id);
+            return `
+              <div class="search-result-item" data-id="${product.id}">
+                <img src="${product.image}" alt="${product.name}">
+                <div class="search-result-details">
+                  <h4>${product.name}</h4>
+                  <div class="product-price">
+                    <span class="current-price">$${product.price.toFixed(2)}</span>
+                    ${product.originalPrice ? `<span class="original-price">$${product.originalPrice.toFixed(2)}</span>` : ''}
                   </div>
-                  <span class="rating-count">(${product.reviews} reviews)</span>
-                </div>
-                <div class="search-result-actions">
-                  <button class="action-btn add-to-cart-search">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                  </button>
-                  <button class="action-btn favorite-btn-search">
-                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
-                  </button>
-                  <button class="action-btn view-details-search">
-                    <i class="fas fa-eye"></i> Details
-                  </button>
+                  <div class="product-rating">
+                    <div class="stars">
+                      ${renderStars(product.rating)}
+                    </div>
+                    <span class="rating-count">(${product.reviews} reviews)</span>
+                  </div>
+                  <div class="search-result-actions">
+                    <button class="action-btn add-to-cart-search">
+                      <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                    <button class="action-btn favorite-btn-search">
+                      <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                    </button>
+                    <button class="action-btn view-details-search">
+                      <i class="fas fa-eye"></i> Details
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          `;
-        }).join('')}
+            `;
+          }).join('')}
+        </div>
       </div>
-    </div>
-  `;
-  
-  openModal(content);
-  
-  // Add event listeners to search result buttons
-  document.querySelectorAll('.add-to-cart-search').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const productId = parseInt(this.closest('.search-result-item').dataset.id);
-      const product = state.products.find(p => p.id === productId);
-      addToCart(product);
-      showNotification(`${product.name} added to cart`);
-    });
-  });
-  
-  document.querySelectorAll('.favorite-btn-search').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const productId = parseInt(this.closest('.search-result-item').dataset.id);
-      const product = state.products.find(p => p.id === productId);
-      toggleFavorite(product, this);
+    `;
+    
+    openModal(content);
+    
+    // Add event listeners to search result buttons
+    setTimeout(() => {
+      document.querySelectorAll('.add-to-cart-search').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productId = parseInt(this.closest('.search-result-item').dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          if (product) {
+            addToCart(product);
+            showNotification(`${product.name} added to cart`);
+          }
+        });
+      });
       
-      // Update button icon
-      const isNowFavorite = state.favorites.some(item => item.id === productId);
-      this.innerHTML = `<i class="${isNowFavorite ? 'fas' : 'far'} fa-heart"></i>`;
-    });
-  });
-  
-  document.querySelectorAll('.view-details-search').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const productId = parseInt(this.closest('.search-result-item').dataset.id);
-      const product = state.products.find(p => p.id === productId);
-      closeModal();
-      showQuickView(product);
-    });
-  });
-  
-  document.querySelector('.close-modal')?.addEventListener('click', closeModal);
-}
+      document.querySelectorAll('.favorite-btn-search').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productId = parseInt(this.closest('.search-result-item').dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          if (product) {
+            toggleFavorite(product, this);
+            
+            // Update button icon
+            const isNowFavorite = state.favorites.some(item => item.id === productId);
+            this.innerHTML = `<i class="${isNowFavorite ? 'fas' : 'far'} fa-heart"></i>`;
+          }
+        });
+      });
+      
+      document.querySelectorAll('.view-details-search').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productId = parseInt(this.closest('.search-result-item').dataset.id);
+          const product = state.products.find(p => p.id === productId);
+          if (product) {
+            closeModal();
+            showQuickView(product);
+          }
+        });
+      });
+      
+      const closeBtn = document.querySelector('.close-modal');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+    }, 10);
+  }
+
   // Handle Newsletter Submission
   function handleNewsletterSubmit(e) {
     e.preventDefault();
-    const email = e.target.querySelector('input[type="email"]').value;
+    const emailInput = e.target.querySelector('input[type="email"]');
+    if (!emailInput) return;
+    
+    const email = emailInput.value;
     
     if (email && validateEmail(email)) {
       showNotification('Thanks for subscribing! You\'ll receive our latest deals soon.');
@@ -755,7 +894,9 @@ function showSearchModal() {
     setTimeout(() => {
       notification.classList.remove('show');
       setTimeout(() => {
-        document.body.removeChild(notification);
+        if (document.body.contains(notification)) {
+          document.body.removeChild(notification);
+        }
       }, 300);
     }, 3000);
   }
@@ -770,16 +911,31 @@ function showSearchModal() {
 
   // Helper: Animate Cart Icon
   function animateCartIcon() {
-    elements.cartCount.style.transform = 'scale(1.5)';
-    setTimeout(() => {
-      elements.cartCount.style.transform = 'scale(1)';
-    }, 300);
+    if (elements.cartCount) {
+      elements.cartCount.style.transform = 'scale(1.5)';
+      setTimeout(() => {
+        elements.cartCount.style.transform = 'scale(1)';
+      }, 300);
+    }
     
     if (elements.floatingCart) {
       elements.floatingCart.style.transform = 'scale(1.1)';
       setTimeout(() => {
         elements.floatingCart.style.transform = 'scale(1)';
       }, 300);
+    }
+  }
+
+  // Show Coming Soon
+  function showComingSoon() {
+    if (typeof Swal !== 'undefined') {
+      Swal.fire({
+        title: "Coming Soon",
+        icon: "info",
+        confirmButtonText: "ok"
+      });
+    } else {
+      showNotification("This feature is coming soon!", "info");
     }
   }
 
@@ -1131,4 +1287,108 @@ function showSearchModal() {
     }
   `;
   document.head.appendChild(style);
+
+  // Sidebar toggle functionality
+  const profileSidebar = document.querySelector(".profile-sidebar");
+  
+  if (profileSidebar) {
+    // Sidebar closed by default
+    profileSidebar.classList.add("collapsed");
+
+    const isOpen = () =>
+      profileSidebar.classList.contains("active") ||
+      !profileSidebar.classList.contains("collapsed");
+
+    const showSidebar = () => {
+      profileSidebar.classList.remove("collapsed");
+      profileSidebar.classList.add("active");
+      updateAria(true);
+    };
+
+    const hideSidebar = () => {
+      profileSidebar.classList.add("collapsed");
+      profileSidebar.classList.remove("active");
+      updateAria(false);
+    };
+
+    const toggleSidebar = () => (isOpen() ? hideSidebar() : showSidebar());
+
+    const updateAria = (open) => {
+      const sidebarToggle = document.getElementById("sidebar-toggle");
+      const profileToggle = document.getElementById("profile-toggle");
+      
+      if (sidebarToggle)
+        sidebarToggle.setAttribute("aria-expanded", String(!!open));
+      if (profileToggle)
+        profileToggle.setAttribute("aria-expanded", String(!!open));
+    };
+
+    const sidebarToggle = document.getElementById("sidebar-toggle");
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+    
+    const profileToggle = document.getElementById("profile-toggle");
+    if (profileToggle) {
+      profileToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+
+    profileSidebar.addEventListener("click", (e) => e.stopPropagation());
+
+    document.addEventListener("click", (e) => {
+      const clickedInsideSidebar = profileSidebar.contains(e.target);
+      const sidebarToggle = document.getElementById("sidebar-toggle");
+      const profileToggle = document.getElementById("profile-toggle");
+      
+      const clickedToggle =
+        (sidebarToggle && sidebarToggle.contains(e.target)) ||
+        (profileToggle && profileToggle.contains(e.target));
+      if (!clickedInsideSidebar && !clickedToggle && isOpen()) {
+        hideSidebar();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen()) hideSidebar();
+    });
+
+    // Normalize on resize
+    const normalizeOnResize = () => {
+      hideSidebar();
+    };
+    normalizeOnResize();
+    window.addEventListener("resize", normalizeOnResize);
+
+    // Avatar Upload + LocalStorage
+    const avatarImg = document.getElementById("user-avatar");
+    const uploadInput = document.getElementById("upload-avatar");
+
+    if (avatarImg && uploadInput) {
+      // Load saved avatar
+      const savedAvatar = localStorage.getItem("user-avatar");
+      if (savedAvatar) {
+        avatarImg.src = savedAvatar;
+      }
+
+      // Save new avatar
+      uploadInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            const imageData = event.target.result;
+            avatarImg.src = imageData;
+            localStorage.setItem("user-avatar", imageData);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+  }
 });
