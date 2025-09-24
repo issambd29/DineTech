@@ -80,6 +80,35 @@ document.addEventListener('DOMContentLoaded', function() {
     linkfeatred: document.querySelector("#btn-f")
   };
 
+  // ================== 1. Firebase Config ==================
+  const firebaseConfig = {
+    apiKey: "AIzaSyAOPGJphMdi4ZzpsxZ7kvTKErJqcQrPsF4",
+    authDomain: "data-com-ea4a5.firebaseapp.com",
+    projectId: "data-com-ea4a5",
+    storageBucket: "data-com-ea4a5.appspot.com",
+    messagingSenderId: "1078182707766",
+    appId: "1:1078182707766:web:b333f3a0fbd1fbb8504e97"
+  };
+
+  // Initialize Firebase only if not already initialized
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const auth = firebase.auth();
+  const database = firebase.database();
+
+  // Firebase Auth State Listener - CRITICAL FOR CART SYNC
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // User is signed in, load cart from Firebase
+      loadCartFromFirebase();
+    } else {
+      // User is signed out, load cart from localStorage
+      state.cart = JSON.parse(localStorage.getItem('cart')) || [];
+      updateCartUI();
+    }
+  });
+
   // Check if elements exist before using them
   const savedEmail = localStorage.getItem("userEmail");
   if (document.getElementsByClassName("profile-email").length > 0) {
@@ -127,8 +156,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function init() {
     createModal();
     setupEventListeners();
-    updateCartUI();
     updateFavoritesUI();
+    
+    // Don't load cart here - it will be loaded by the auth state listener
   }
 
   // Setup Event Listeners
@@ -227,7 +257,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoutBtn) {
       logoutBtn.addEventListener("click", () => {
         localStorage.removeItem("user-avatar");
-        window.location.href = "../login.html";
+        // Sign out from Firebase
+        auth.signOut().then(() => {
+          window.location.href = "../login.html";
+        });
       });
     }
     
@@ -477,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 10);
   }
 
-  // Add to Cart
+  // Add to Cart - Updated to sync with Firebase
   function addToCart(product, quantity = 1) {
     const existingItem = state.cart.find(item => item.id === product.id);
     
@@ -490,8 +523,14 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
     
-    // Save to localStorage
+    // Save to localStorage as backup
     localStorage.setItem('cart', JSON.stringify(state.cart));
+    
+    // Save to Firebase if user is logged in
+    const user = auth.currentUser;
+    if (user) {
+      addToCartFirebase(product, existingItem ? existingItem.quantity : quantity);
+    }
     
     updateCartUI();
     showNotification(`${product.name} added to cart`);
@@ -593,7 +632,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 10);
   }
 
-  // Update Cart Item Quantity
+  // Update Cart Item Quantity - Updated to sync with Firebase
   function updateCartItemQuantity(productId, change) {
     const item = state.cart.find(item => item.id === productId);
     if (!item) return;
@@ -605,16 +644,31 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       // Save to localStorage
       localStorage.setItem('cart', JSON.stringify(state.cart));
+      
+      // Update in Firebase if user is logged in
+      const user = auth.currentUser;
+      if (user) {
+        updateCartItemQuantityFirebase(productId, item.quantity);
+      }
+      
       updateCartUI();
       showCartModal(); // Refresh modal
     }
   }
 
-  // Remove from Cart
+  // Remove from Cart - Updated to sync with Firebase
   function removeFromCart(productId) {
     state.cart = state.cart.filter(item => item.id !== productId);
+    
     // Save to localStorage
     localStorage.setItem('cart', JSON.stringify(state.cart));
+    
+    // Remove from Firebase if user is logged in
+    const user = auth.currentUser;
+    if (user) {
+      removeFromCartFirebase(productId);
+    }
+    
     updateCartUI();
     showNotification('Item removed from cart');
     
@@ -649,11 +703,25 @@ document.addEventListener('DOMContentLoaded', function() {
         <form class="checkout-form">
           <h3>Shipping Information</h3>
           <div class="form-group">
-            <input type="text" placeholder="Full Name" required>
+            <input 
+              type="text" 
+              id="checkout-Name" 
+              placeholder="Name" 
+              value="${localStorage.getItem("userName") || ""}" 
+              required
+              readonly
+            >
           </div>
           <div class="form-group">
-            <input type="email" placeholder="Email" required>
+            <input 
+              type="email" 
+              id="checkout-email" 
+              placeholder="Email" 
+              value="${localStorage.getItem("userEmail") || ""}" 
+              required
+            >
           </div>
+
           <div class="form-group">
             <input type="text" placeholder="Address" required>
           </div>
@@ -700,22 +768,81 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }, 10);
   }
+function placeOrder() {
+  const orderTotal = calculateCartTotal();
+  const orderId = 'ORD-' + Math.floor(Math.random() * 1000000);
 
-  // Place Order
-  function placeOrder() {
-    // In a real app, you would process payment here
-    const orderTotal = calculateCartTotal();
-    const orderId = 'ORD-' + Math.floor(Math.random() * 1000000);
-    
-    showNotification(`Order #${orderId} placed successfully! Total: $${orderTotal.toFixed(2)}`);
-    
-    // Clear cart
+  const emailInput = document.getElementById("checkout-email");
+  const email = emailInput ? emailInput.value.trim() : (localStorage.getItem("userEmail") || "N/A");
+
+  const orderData = {
+    id: orderId,
+    items: state.cart.map(item => `${item.name} x ${item.quantity}`).join(", "),
+    total: orderTotal.toFixed(2),
+    customer_name: localStorage.getItem("userName") || "Guest",
+    customer_email: email,
+    customer_phone: localStorage.getItem("userPhone") || "N/A",
+    date: new Date().toLocaleString()
+  };
+
+  const formData = new FormData();
+  Object.keys(orderData).forEach(key => formData.append(key, orderData[key]));
+
+  fetch("https://script.google.com/macros/s/AKfycbxgIXgYOtIbwxYDy_8qk7QSnxzvakGwF7cXyWU8uHIfEOZyfVf9OchD0QMME0jYxfO8/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.result === "success") {
+      console.log("✅ Order saved:", data);
+      showNotification(`Order #${data.orderId} placed successfully!`);
+    } else {
+      console.error("❌ Error saving order:", data.error);
+    }
+  })
+  .catch(error => console.error("❌ Fetch error:", error))
+  .finally(() => {
     state.cart = [];
     localStorage.setItem('cart', JSON.stringify(state.cart));
     updateCartUI();
     closeModal();
-  }
+  });
+}
 
+
+
+function submitOrderToSheets(orderId, orderTotal) {
+  const emailInput = document.getElementById("checkout-email");
+  const email = emailInput ? emailInput.value.trim() : (localStorage.getItem("userEmail") || "N/A");
+
+  const orderData = {
+    id: orderId,
+    items: state.cart.map(item => `${item.name} x ${item.quantity}`).join(", "),
+    total: orderTotal.toFixed(2),
+    customer_name: localStorage.getItem("userName") || "Guest",
+    customer_email: email,
+    customer_phone: localStorage.getItem("userPhone") || "N/A",
+    date: new Date().toLocaleString()
+  };
+
+  // Silent submission - don't wait for response
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = "https://script.google.com/macros/s/AKfycbw7bPIBvZAMnu5l1GuJRNaW85tnas0B31c2scHR3VO5se9U80FzozVBLADbA_l3jQhe/exec";
+  form.style.display = 'none';
+  
+  Object.keys(orderData).forEach(key => {
+    const input = document.createElement('input');
+    input.name = key;
+    input.value = orderData[key];
+    form.appendChild(input);
+  });
+  
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(() => document.body.removeChild(form), 1000);
+}
   // Calculate Cart Total
   function calculateCartTotal() {
     return state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -939,6 +1066,171 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // ================== Firebase Cart Functions ==================
+  
+  // Add to Cart in Firebase
+  function addToCartFirebase(product, quantity) {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const uid = user.uid;
+    const cartRef = database.ref("users/" + uid + "/cart/" + product.id);
+
+    cartRef.set({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: quantity,
+      image: product.image
+    }).catch((error) => {
+      console.error("Error adding to cart in Firebase:", error);
+    });
+  }
+
+  // Update Cart Item Quantity in Firebase
+  function updateCartItemQuantityFirebase(productId, quantity) {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const uid = user.uid;
+    const cartRef = database.ref("users/" + uid + "/cart/" + productId);
+
+    if (quantity <= 0) {
+      cartRef.remove().catch((error) => {
+        console.error("Error removing from cart in Firebase:", error);
+      });
+    } else {
+      cartRef.update({ quantity: quantity }).catch((error) => {
+        console.error("Error updating quantity in Firebase:", error);
+      });
+    }
+  }
+
+  // Remove from Cart in Firebase
+  function removeFromCartFirebase(productId) {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const uid = user.uid;
+    database.ref("users/" + uid + "/cart/" + productId).remove()
+      .catch((error) => {
+        console.error("Error removing from cart in Firebase:", error);
+      });
+  }
+
+  // Clear Cart in Firebase
+  function clearCartFirebase() {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const uid = user.uid;
+    database.ref("users/" + uid + "/cart").remove()
+      .catch((error) => {
+        console.error("Error clearing cart in Firebase:", error);
+      });
+  }
+
+  // Load Cart from Firebase - UPDATED TO HANDLE MERGING
+  function loadCartFromFirebase() {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const uid = user.uid;
+    const cartRef = database.ref("users/" + uid + "/cart");
+
+    cartRef.once("value").then((snapshot) => {
+      const firebaseCart = [];
+      
+      if (snapshot.exists()) {
+        snapshot.forEach((child) => {
+          const item = child.val();
+          // Find the complete product details from our products array
+          const productDetails = state.products.find(p => p.id === item.id);
+          if (productDetails) {
+            firebaseCart.push({
+              ...productDetails,
+              quantity: item.quantity
+            });
+          }
+        });
+      }
+      
+      // Strategy: Use Firebase cart as source of truth for logged-in users
+      state.cart = firebaseCart;
+      
+      // Also update localStorage as backup
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+      
+      updateCartUI();
+      
+    }).catch((error) => {
+      console.error("Error loading cart from Firebase:", error);
+      // Fallback to localStorage if Firebase fails
+      state.cart = JSON.parse(localStorage.getItem('cart')) || [];
+      updateCartUI();
+    });
+  }
+
+  // ================== 2. Sign Up ==================
+  function signUp(fullName, username, email, phone, gender, password) {
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const uid = user.uid;
+
+        // تحديث الاسم في الحساب
+        user.updateProfile({
+          displayName: fullName
+        });
+
+        // تخزين بيانات المستخدم
+        return database.ref("users/" + uid).set({
+          fullName: fullName,
+          username: username,
+          email: email,
+          phone: phone,
+          gender: gender
+        });
+      })
+      .then(() => {
+        alert("✅ Account created successfully!");
+        window.location.href = "login.html";
+      })
+      .catch((error) => {
+        alert("❌ Error: " + error.message);
+      });
+  }
+
+  // ================== 3. Login ==================
+  function login(email, password) {
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const uid = userCredential.user.uid;
+
+        // تحميل بيانات المستخدم
+        return database.ref("users/" + uid).once("value");
+      })
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+
+          // تخزين في localStorage
+          localStorage.setItem("userName", data.fullName);
+          localStorage.setItem("userPhone", data.phone);
+          localStorage.setItem("userEmail", data.email);
+
+          // Load cart from Firebase after login
+          loadCartFromFirebase();
+          
+          alert("👋 Welcome " + data.fullName);
+          window.location.href = "shop.html";
+        }
+      })
+      .catch((error) => {
+        alert("❌ Login Failed: " + error.message);
+      });
+  }
+
   // Initialize the app
   init();
 
@@ -1136,6 +1428,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     .search-result-details {
       flex: 1;
+      position: relative;
     }
     
     .search-result-actions {
@@ -1218,6 +1511,10 @@ document.addEventListener('DOMContentLoaded', function() {
       max-height: 300px;
       max-width: 100%;
       object-fit: contain;
+    }
+    
+    .quick-view-details {
+      flex: 1;
     }
     
     .quick-view-actions {
@@ -1391,4 +1688,5 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   }
+  
 });
