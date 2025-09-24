@@ -964,6 +964,163 @@
     }, 3000);
   }
 
+  function placeOrder() {
+  const orderTotal = calculateCartTotal();
+  const orderId = 'ORD-' + Math.floor(Math.random() * 1000000);
+
+  const emailInput = document.getElementById("checkout-email");
+  const email = emailInput ? emailInput.value.trim() : (localStorage.getItem("userEmail") || "N/A");
+
+  const orderData = {
+    id: orderId,
+    items: state.cart.map(item => `${item.name} x ${item.quantity}`).join(", "),
+    total: orderTotal.toFixed(2),
+    customer_name: localStorage.getItem("userName") || "Guest",
+    customer_email: email,
+    customer_phone: localStorage.getItem("userPhone") || "N/A",
+    date: new Date().toLocaleString()
+  };
+
+  const formData = new FormData();
+  Object.keys(orderData).forEach(key => formData.append(key, orderData[key]));
+
+  fetch("https://script.google.com/macros/s/AKfycbxgIXgYOtIbwxYDy_8qk7QSnxzvakGwF7cXyWU8uHIfEOZyfVf9OchD0QMME0jYxfO8/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.result === "success") {
+      console.log("✅ Order saved:", data);
+      showNotification(`Order #${data.orderId} placed successfully!`);
+    } else {
+      console.error("❌ Error saving order:", data.error);
+    }
+  })
+  .catch(error => console.error("❌ Fetch error:", error))
+  .finally(() => {
+    state.cart = [];
+    localStorage.setItem('cart', JSON.stringify(state.cart));
+    updateCartUI();
+    closeModal();
+  });
+}
+
+// Update the showCheckoutModal function to make name field non-editable
+function showCheckoutModal() {
+  const userName = localStorage.getItem("userName") || "Guest";
+  
+  const content = `
+    <div class="checkout-modal">
+      <button class="close-modal">&times;</button>
+      <h2>Checkout</h2>
+      <div class="checkout-summary">
+        <h3>Order Summary (${state.cart.reduce((sum, item) => sum + item.quantity, 0)} items)</h3>
+        <div class="checkout-items">
+          ${state.cart.map(item => `
+            <div class="checkout-item">
+              <span>${item.name} × ${item.quantity}</span>
+              <span>$${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="checkout-total">
+          <span>Total:</span>
+          <span>$${calculateCartTotal().toFixed(2)}</span>
+        </div>
+      </div>
+      <form class="checkout-form">
+        <h3>Shipping Information</h3>
+        <div class="form-group">
+          <input 
+            type="text" 
+            id="checkout-name" 
+            value="${userName}" 
+            readonly 
+            style="background-color: #f8f9fa; color: #495057; cursor: not-allowed;"
+          >
+          <div class="form-label">Name (from your account)</div>
+        </div>
+        <div class="form-group">
+          <input type="email" id="checkout-email" placeholder="Email" required>
+          <div class="error-message">Please enter a valid email</div>
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Address" required>
+          <div class="error-message">Please enter your address</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" placeholder="City" required>
+            <div class="error-message">Please enter your city</div>
+          </div>
+          <div class="form-group">
+            <input type="text" placeholder="ZIP Code" required>
+            <div class="error-message">Please enter your ZIP code</div>
+          </div>
+        </div>
+        <h3>Payment Method</h3>
+        <div class="payment-methods">
+          <label class="payment-method">
+            <input type="radio" name="payment" checked>
+            <i class="fab fa-cc-visa"></i> Credit Card
+          </label>
+          <label class="payment-method">
+            <input type="radio" name="payment">
+            <i class="fab fa-cc-paypal"></i> PayPal
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary place-order-btn">
+          Place Order <i class="fas fa-lock"></i>
+        </button>
+      </form>
+    </div>
+  `;
+  
+  // Create modal
+  const modalOverlay = document.createElement('div');
+  modalOverlay.className = 'modal-overlay';
+  modalOverlay.innerHTML = content;
+  document.body.appendChild(modalOverlay);
+  modalOverlay.style.display = 'flex';
+  
+  // Add event listeners
+  modalOverlay.querySelector('.close-modal').addEventListener('click', () => {
+    document.body.removeChild(modalOverlay);
+  });
+  
+  modalOverlay.querySelector('.checkout-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    placeOrder();
+    document.body.removeChild(modalOverlay);
+  });
+}
+
+// Alternative: If you want to keep your existing HTML structure, add this after DOM content loads
+document.addEventListener('DOMContentLoaded', function() {
+  // Make name field non-editable when checkout modal opens
+  const originalShowCheckoutModal = window.showCheckoutModal;
+  
+  window.showCheckoutModal = function() {
+    originalShowCheckoutModal();
+    
+    // Wait for modal to be created and then make name field readonly
+    setTimeout(() => {
+      const nameInput = document.getElementById('checkout-name');
+      if (nameInput) {
+        nameInput.setAttribute('readonly', 'true');
+        nameInput.style.backgroundColor = '#f8f9fa';
+        nameInput.style.color = '#495057';
+        nameInput.style.cursor = 'not-allowed';
+        
+        // Set value from localStorage
+        const userName = localStorage.getItem("userName") || "Guest";
+        nameInput.value = userName;
+      }
+    }, 10);
+  };
+});
+
   // Helper: Animate Cart Icon
   function animateCartIcon() {
     elements.cartCount.style.transform = 'scale(1.5)';
