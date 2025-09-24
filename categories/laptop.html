@@ -811,6 +811,8 @@
     
       // Show Checkout Modal
       function showCheckoutModal() {
+         const userName = localStorage.getItem("userName") || "Guest";
+
         const content = `
           <div class="checkout-modal">
             <button class="close-modal">&times;</button>
@@ -833,8 +835,14 @@
             <form class="checkout-form">
               <h3>Shipping Information</h3>
               <div class="form-group">
-                <input type="text" placeholder="Full Name" required>
-                <div class="error-message">Please enter your full name</div>
+                <input 
+                  type="text" 
+                  id="checkout-name" 
+                  value="${userName}" 
+                  readonly 
+                  style="background-color: #f8f9fa; color: #495057; cursor: not-allowed;"
+                >
+                <div class="form-label">Name (from your account)</div>
               </div>
               <div class="form-group">
                 <input type="email" placeholder="Email" required>
@@ -917,19 +925,47 @@
       }
     
       // Place Order
-      function placeOrder() {
-        // In a real app, you would process payment here
-        const orderTotal = calculateCartTotal();
-        const orderId = 'ORD-' + Math.floor(Math.random() * 1000000);
-        
-        showNotification(`Order #${orderId} placed successfully! Total: $${orderTotal.toFixed(2)}`);
-        
-        // Clear cart
-        state.cart = [];
-        localStorage.setItem('cart', JSON.stringify(state.cart));
-        updateCartUI();
-      }
-    
+function placeOrder() {
+  const orderTotal = calculateCartTotal();
+  const orderId = 'ORD-' + Math.floor(Math.random() * 1000000);
+
+  const emailInput = document.getElementById("checkout-email");
+  const email = emailInput ? emailInput.value.trim() : (localStorage.getItem("userEmail") || "N/A");
+
+  const orderData = {
+    id: orderId,
+    items: state.cart.map(item => `${item.name} x ${item.quantity}`).join(", "),
+    total: orderTotal.toFixed(2),
+    customer_name: localStorage.getItem("userName") || "Guest",
+    customer_email: email,
+    customer_phone: localStorage.getItem("userPhone") || "N/A",
+    date: new Date().toLocaleString()
+  };
+
+  const formData = new FormData();
+  Object.keys(orderData).forEach(key => formData.append(key, orderData[key]));
+
+  fetch("https://script.google.com/macros/s/AKfycbxgIXgYOtIbwxYDy_8qk7QSnxzvakGwF7cXyWU8uHIfEOZyfVf9OchD0QMME0jYxfO8/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.result === "success") {
+      console.log("✅ Order saved:", data);
+      showNotification(`Order #${data.orderId} placed successfully!`);
+    } else {
+      console.error("❌ Error saving order:", data.error);
+    }
+  })
+  .catch(error => console.error("❌ Fetch error:", error))
+  .finally(() => {
+    state.cart = [];
+    localStorage.setItem('cart', JSON.stringify(state.cart));
+    updateCartUI();
+    closeModal();
+  });
+}
       // Calculate Cart Total
       function calculateCartTotal() {
         return state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
